@@ -7,8 +7,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import org.slf4j.Logger;
 
-import java.util.Objects;
-
 @Mod(Mildb.MODID)
 public class Mildb {
     public static final String MODID = "mildb";
