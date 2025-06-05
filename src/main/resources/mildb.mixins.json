@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.github.meatwo310.mildb.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "mildb.refmap.json",
+  "mixins": [
+    "BeastBulletMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
