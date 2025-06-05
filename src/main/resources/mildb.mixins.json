@@ -7,6 +7,7 @@
   "mixins": [
     "superbwarfare.BeastBulletMixin",
     "superbwarfare.BeastMixin",
+    "superbwarfare.LungeMineMixin",
     "superbwarfare.ProjectileEntityMixin"
   ],
   "client": [
