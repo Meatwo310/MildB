@@ -7,10 +7,13 @@
   "mixins": [
     "superbwarfare.BeastBulletMixin",
     "superbwarfare.BeastMixin",
+    "superbwarfare.DoubleJumpMessageMixin",
+    "superbwarfare.JumpPadBlockMixin",
     "superbwarfare.LungeMineMixin",
     "superbwarfare.ProjectileEntityMixin"
   ],
   "client": [
+    "superbwarfare.ClickHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
