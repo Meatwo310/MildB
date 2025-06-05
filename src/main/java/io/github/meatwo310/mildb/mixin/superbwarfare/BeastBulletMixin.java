@@ -1,4 +1,4 @@
-package io.github.meatwo310.mildb.mixin;
+package io.github.meatwo310.mildb.mixin.superbwarfare;
 
 import com.atsuishio.superbwarfare.entity.projectile.ProjectileEntity;
 import com.atsuishio.superbwarfare.perk.ammo.BeastBullet;

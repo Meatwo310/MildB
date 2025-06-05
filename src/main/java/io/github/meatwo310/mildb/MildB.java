@@ -1,17 +1,14 @@
 package io.github.meatwo310.mildb;
 
-import com.mojang.logging.LogUtils;
 import io.github.meatwo310.mildb.config.ServerConfig;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import org.slf4j.Logger;
 
-@Mod(Mildb.MODID)
-public class Mildb {
+@Mod(MildB.MODID)
+public class MildB {
     public static final String MODID = "mildb";
-    private static final Logger LOGGER = LogUtils.getLogger();
-    public Mildb() {
+    public MildB() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
     }
 }

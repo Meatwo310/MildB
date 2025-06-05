@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "mildb.refmap.json",
   "mixins": [
-    "BeastBulletMixin"
+    "superbwarfare.BeastBulletMixin",
+    "superbwarfare.BeastMixin",
+    "superbwarfare.ProjectileEntityMixin"
   ],
   "client": [
   ],
