@@ -11,7 +11,8 @@
     "superbwarfare.JumpPadBlockMixin",
     "superbwarfare.LungeMineMixin",
     "superbwarfare.ModVillagersMixin",
-    "superbwarfare.ProjectileEntityMixin"
+    "superbwarfare.ProjectileEntityMixin",
+    "superbwarfare.ShockMobEffectMixin"
   ],
   "client": [
     "superbwarfare.ClickHandlerMixin"
