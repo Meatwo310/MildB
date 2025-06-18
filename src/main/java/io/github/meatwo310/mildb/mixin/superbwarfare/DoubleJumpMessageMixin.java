@@ -22,7 +22,8 @@ public class DoubleJumpMessageMixin {
                             "Lnet/minecraft/core/BlockPos;" +
                             "Lnet/minecraft/sounds/SoundEvent;" +
                             "Lnet/minecraft/sounds/SoundSource;" +
-                            "FF)V"
+                            "FF)V",
+                    remap = true
             )
     )
     private static void playSound(

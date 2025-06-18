@@ -30,7 +30,8 @@ public class BeastMixin {
 
     @Inject(
             method = "appendHoverText",
-            at = @At("TAIL")
+            at = @At("TAIL"),
+            remap = true
     )
     private void appendHoverText(
             ItemStack pStack,

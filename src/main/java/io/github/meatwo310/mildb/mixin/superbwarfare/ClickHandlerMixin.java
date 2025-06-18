@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(value = ClickHandler.class, remap = false)
+@Mixin(value = ClickHandler.class)
 public class ClickHandlerMixin {
     @Redirect(
             method = "handleDoubleJump",

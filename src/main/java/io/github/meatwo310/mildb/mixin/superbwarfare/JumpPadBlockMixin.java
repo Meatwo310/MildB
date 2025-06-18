@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(value = JumpPadBlock.class, remap = false)
+@Mixin(value = JumpPadBlock.class)
 public class JumpPadBlockMixin {
     @Redirect(
             method = "entityInside",
