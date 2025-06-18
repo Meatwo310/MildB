@@ -10,6 +10,7 @@
     "superbwarfare.DoubleJumpMessageMixin",
     "superbwarfare.JumpPadBlockMixin",
     "superbwarfare.LungeMineMixin",
+    "superbwarfare.ModVillagersMixin",
     "superbwarfare.ProjectileEntityMixin"
   ],
   "client": [
