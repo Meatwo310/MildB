@@ -5,14 +5,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "mildb.refmap.json",
   "mixins": [
-    "superbwarfare.BeastBulletMixin",
-    "superbwarfare.BeastMixin",
-    "superbwarfare.DoubleJumpMessageMixin",
-    "superbwarfare.JumpPadBlockMixin",
-    "superbwarfare.LungeMineMixin",
-    "superbwarfare.ModVillagersMixin",
-    "superbwarfare.ProjectileEntityMixin",
-    "superbwarfare.ShockMobEffectMixin"
+    "entitylimit.minecraft.EntityMixin",
+    "entitylimit.minecraft.ProjectileMixin",
     "mildb.superbwarfare.BeastBulletMixin",
     "mildb.superbwarfare.BeastMixin",
     "mildb.superbwarfare.DoubleJumpMessageMixin",
