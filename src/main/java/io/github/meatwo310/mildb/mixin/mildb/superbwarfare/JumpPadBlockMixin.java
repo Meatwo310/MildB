@@ -1,6 +1,6 @@
-package io.github.meatwo310.mildb.mixin.superbwarfare;
+package io.github.meatwo310.mildb.mixin.mildb.superbwarfare;
 
-import com.atsuishio.superbwarfare.item.LungeMine;
+import com.atsuishio.superbwarfare.block.JumpPadBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -11,10 +11,10 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(value = LungeMine.class)
-public class LungeMineMixin {
+@Mixin(value = JumpPadBlock.class)
+public class JumpPadBlockMixin {
     @Redirect(
-            method = "use",
+            method = "entityInside",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/level/Level;playSound(" +
@@ -37,10 +37,41 @@ public class LungeMineMixin {
         level.playSound(
                 player,
                 pos,
-                SoundEvents.TRIDENT_RIPTIDE_1,
+                SoundEvents.PISTON_EXTEND,
                 soundSource,
                 volume,
-                pitch
+                1.1f
+        );
+    }
+
+    @Redirect(
+            method = "entityInside",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/level/Level;playLocalSound(" +
+                            "DDDLnet/minecraft/sounds/SoundEvent;" +
+                            "Lnet/minecraft/sounds/SoundSource;" +
+                            "FFZ)V"
+            )
+    )
+    private void playLocalSound(
+            Level level,
+            double x,
+            double y,
+            double z,
+            SoundEvent soundEvent,
+            SoundSource soundSource,
+            float volume,
+            float pitch,
+            boolean distanceDelay
+    ) {
+        level.playLocalSound(
+                x, y, z,
+                SoundEvents.PISTON_EXTEND,
+                soundSource,
+                volume,
+                1.1f,
+                distanceDelay
         );
     }
 }

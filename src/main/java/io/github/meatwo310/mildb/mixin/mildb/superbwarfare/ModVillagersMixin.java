@@ -1,4 +1,4 @@
-package io.github.meatwo310.mildb.mixin.superbwarfare;
+package io.github.meatwo310.mildb.mixin.mildb.superbwarfare;
 
 import com.atsuishio.superbwarfare.init.ModVillagers;
 import net.minecraftforge.event.village.VillagerTradesEvent;

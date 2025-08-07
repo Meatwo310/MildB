@@ -13,9 +13,17 @@
     "superbwarfare.ModVillagersMixin",
     "superbwarfare.ProjectileEntityMixin",
     "superbwarfare.ShockMobEffectMixin"
+    "mildb.superbwarfare.BeastBulletMixin",
+    "mildb.superbwarfare.BeastMixin",
+    "mildb.superbwarfare.DoubleJumpMessageMixin",
+    "mildb.superbwarfare.JumpPadBlockMixin",
+    "mildb.superbwarfare.LungeMineMixin",
+    "mildb.superbwarfare.ModVillagersMixin",
+    "mildb.superbwarfare.ProjectileEntityMixin",
+    "mildb.superbwarfare.ShockMobEffectMixin"
   ],
   "client": [
-    "superbwarfare.ClickHandlerMixin"
+    "mildb.superbwarfare.ClickHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
