@@ -95,7 +95,7 @@ public class ShockMobEffectMixin {
     }
 
     // is this needed?
-    @Redirect(method = "applyEffectTick", remap = false, at = @At(
+    @Redirect(method = "applyEffectTick", at = @At(
             value = "INVOKE",
             target = "Lcom/atsuishio/superbwarfare/tools/DamageHandler;doDamage(" +
                     "Lnet/minecraft/world/entity/Entity;" +
