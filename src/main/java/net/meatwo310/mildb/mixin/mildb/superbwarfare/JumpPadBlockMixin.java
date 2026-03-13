@@ -1,19 +1,16 @@
 package net.meatwo310.mildb.mixin.mildb.superbwarfare;
 
 import com.atsuishio.superbwarfare.block.JumpPadBlock;
-import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvent;
+import net.meatwo310.mildb.config.ServerConfig;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(value = JumpPadBlock.class)
 public class JumpPadBlockMixin {
-    @Redirect(
+    @ModifyArgs(
             method = "entityInside",
             at = @At(
                     value = "INVOKE",
@@ -25,26 +22,16 @@ public class JumpPadBlockMixin {
                             "FF)V"
             )
     )
-    private void playSound(
-            Level level,
-            Player player,
-            BlockPos pos,
-            SoundEvent soundEvent,
-            SoundSource soundSource,
-            float volume,
-            float pitch
-    ) {
-        level.playSound(
-                player,
-                pos,
-                SoundEvents.PISTON_EXTEND,
-                soundSource,
-                volume,
-                1.1f
-        );
+    private void modifyPlaySoundArgs(Args args) {
+        if (!ServerConfig.SAFE_SOUND_EFFECT.get()) {
+            return;
+        }
+
+        args.set(2, SoundEvents.PISTON_EXTEND);
+        args.set(5, 1.1f);
     }
 
-    @Redirect(
+    @ModifyArgs(
             method = "entityInside",
             at = @At(
                     value = "INVOKE",
@@ -54,24 +41,12 @@ public class JumpPadBlockMixin {
                             "FFZ)V"
             )
     )
-    private void playLocalSound(
-            Level level,
-            double x,
-            double y,
-            double z,
-            SoundEvent soundEvent,
-            SoundSource soundSource,
-            float volume,
-            float pitch,
-            boolean distanceDelay
-    ) {
-        level.playLocalSound(
-                x, y, z,
-                SoundEvents.PISTON_EXTEND,
-                soundSource,
-                volume,
-                1.1f,
-                distanceDelay
-        );
+    private void modifyPlayLocalSoundArgs(Args args) {
+        if (!ServerConfig.SAFE_SOUND_EFFECT.get()) {
+            return;
+        }
+
+        args.set(3, SoundEvents.PISTON_EXTEND);
+        args.set(6, 1.1f);
     }
 }

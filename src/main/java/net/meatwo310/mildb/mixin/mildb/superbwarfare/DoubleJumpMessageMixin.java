@@ -1,19 +1,16 @@
 package net.meatwo310.mildb.mixin.mildb.superbwarfare;
 
 import com.atsuishio.superbwarfare.network.message.send.DoubleJumpMessage;
-import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvent;
+import net.meatwo310.mildb.config.ServerConfig;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(value = DoubleJumpMessage.class, remap = false)
 public class DoubleJumpMessageMixin {
-    @Redirect(
+    @ModifyArgs(
             method = "lambda$handler$0",
             at = @At(
                     value = "INVOKE",
@@ -26,22 +23,12 @@ public class DoubleJumpMessageMixin {
                     remap = true
             )
     )
-    private static void playSound(
-            Level level,
-            Player player,
-            BlockPos pos,
-            SoundEvent soundEvent,
-            SoundSource soundSource,
-            float volume,
-            float pitch
-    ) {
-        level.playSound(
-                player,
-                pos,
-                SoundEvents.PISTON_EXTEND,
-                soundSource,
-                volume,
-                1.2f
-        );
+    private static void modifyPlaySoundArgs(Args args) {
+        if (!ServerConfig.SAFE_SOUND_EFFECT.get()) {
+            return;
+        }
+
+        args.set(2, SoundEvents.PISTON_EXTEND);
+        args.set(5, 1.2f);
     }
 }

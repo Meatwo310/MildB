@@ -1,19 +1,16 @@
 package net.meatwo310.mildb.mixin.mildb.superbwarfare;
 
 import com.atsuishio.superbwarfare.mobeffect.ShockMobEffect;
-import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvent;
+import net.meatwo310.mildb.config.ServerConfig;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(ShockMobEffect.class)
 public class ShockMobEffectMixin {
-    @Redirect(
+    @ModifyArgs(
             method = "onEffectAdded",
             at = @At(
                     value = "INVOKE",
@@ -22,30 +19,19 @@ public class ShockMobEffectMixin {
                             "Lnet/minecraft/core/BlockPos;" +
                             "Lnet/minecraft/sounds/SoundEvent;" +
                             "Lnet/minecraft/sounds/SoundSource;" +
-                            "FF" +
-                            ")V"
+                            "FF)V"
             )
     )
-    private static void playSound(
-            Level level,
-            Player player,
-            BlockPos pos,
-            SoundEvent soundEvent,
-            SoundSource soundSource,
-            float volume,
-            float pitch
-    ) {
-        level.playSound(
-                player,
-                pos,
-                SoundEvents.PLAYER_BREATH,
-                soundSource,
-                volume,
-                1.5f
-        );
+    private static void modifyPlaySoundArgs(Args args) {
+        if (!ServerConfig.SAFE_SOUND_EFFECT.get()) {
+            return;
+        }
+
+        args.set(2, SoundEvents.PLAYER_BREATH);
+        args.set(5, 1.5f);
     }
 
-    @Redirect(
+    @ModifyArgs(
             method = "onEffectAdded",
             at = @At(
                     value = "INVOKE",
@@ -53,28 +39,15 @@ public class ShockMobEffectMixin {
                             "DDD" +
                             "Lnet/minecraft/sounds/SoundEvent;" +
                             "Lnet/minecraft/sounds/SoundSource;" +
-                            "FFZ" +
-                            ")V"
+                            "FFZ)V"
             )
     )
-    private static void playLocalSound(
-            Level level,
-            double x,
-            double y,
-            double z,
-            SoundEvent soundEvent,
-            SoundSource soundSource,
-            float volume,
-            float pitch,
-            boolean distanceDelay
-    ) {
-        level.playLocalSound(
-                x, y, z,
-                SoundEvents.PLAYER_BREATH,
-                soundSource,
-                volume,
-                1.5f,
-                distanceDelay
-        );
+    private static void modifyPlayLocalSoundArgs(Args args) {
+        if (!ServerConfig.SAFE_SOUND_EFFECT.get()) {
+            return;
+        }
+
+        args.set(3, SoundEvents.PLAYER_BREATH);
+        args.set(6, 1.5f);
     }
 }

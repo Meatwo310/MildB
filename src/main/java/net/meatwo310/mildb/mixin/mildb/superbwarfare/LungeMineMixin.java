@@ -1,19 +1,16 @@
 package net.meatwo310.mildb.mixin.mildb.superbwarfare;
 
 import com.atsuishio.superbwarfare.item.LungeMine;
-import net.minecraft.core.BlockPos;
+import net.meatwo310.mildb.config.ServerConfig;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(value = LungeMine.class)
 public class LungeMineMixin {
-    @Redirect(
+    @ModifyArg(
             method = "use",
             at = @At(
                     value = "INVOKE",
@@ -23,24 +20,14 @@ public class LungeMineMixin {
                             "Lnet/minecraft/sounds/SoundEvent;" +
                             "Lnet/minecraft/sounds/SoundSource;" +
                             "FF)V"
-            )
+            ),
+            index = 2
     )
-    private void playSound(
-            Level level,
-            Player player,
-            BlockPos pos,
-            SoundEvent soundEvent,
-            SoundSource soundSource,
-            float volume,
-            float pitch
-    ) {
-        level.playSound(
-                player,
-                pos,
-                SoundEvents.TRIDENT_RIPTIDE_1,
-                soundSource,
-                volume,
-                pitch
-        );
+    private SoundEvent modifySoundEvent(SoundEvent original) {
+        if (!ServerConfig.SAFE_SOUND_EFFECT.get()) {
+            return original;
+        }
+
+        return SoundEvents.TRIDENT_RIPTIDE_1;
     }
 }
