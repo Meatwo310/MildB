@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.meatwo310.mildb.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mildb.refmap.json",
+  "mixins": [
+    "mildb.superbwarfare.BeastBulletMixin",
+    "mildb.superbwarfare.BeastMixin",
+    "mildb.superbwarfare.ClickHandlerMixin",
+    "mildb.superbwarfare.DoubleJumpMessageMixin",
+    "mildb.superbwarfare.JumpPadBlockMixin",
+    "mildb.superbwarfare.LungeMineMixin",
+    "mildb.superbwarfare.ProjectileEntityMixin",
+    "mildb.superbwarfare.ShockMobEffectMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
