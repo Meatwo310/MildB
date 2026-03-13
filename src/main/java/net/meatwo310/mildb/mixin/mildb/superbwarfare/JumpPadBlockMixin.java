@@ -1,52 +1,49 @@
 package net.meatwo310.mildb.mixin.mildb.superbwarfare;
 
 import com.atsuishio.superbwarfare.block.JumpPadBlock;
+import net.meatwo310.mildb.MildB;
 import net.meatwo310.mildb.config.ServerConfig;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(value = JumpPadBlock.class)
 public class JumpPadBlockMixin {
-    @ModifyArgs(
+    @ModifyArg(
             method = "entityInside",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/Level;playSound(" +
-                            "Lnet/minecraft/world/entity/player/Player;" +
-                            "Lnet/minecraft/core/BlockPos;" +
-                            "Lnet/minecraft/sounds/SoundEvent;" +
-                            "Lnet/minecraft/sounds/SoundSource;" +
-                            "FF)V"
-            )
+            at = @At(value = "INVOKE", target = MildB.TARGET_LEVEL_PLAY_SOUND),
+            index = 2
     )
-    private void modifyPlaySoundArgs(Args args) {
-        if (!ServerConfig.SAFE_SOUND_EFFECT.get()) {
-            return;
-        }
-
-        args.set(2, SoundEvents.PISTON_EXTEND);
-        args.set(5, 1.1f);
+    private SoundEvent modifyPlaySoundEvent(SoundEvent original) {
+        return ServerConfig.SAFE_SOUND_EFFECT.get() ? SoundEvents.PISTON_EXTEND : original;
     }
 
-    @ModifyArgs(
+    @ModifyArg(
             method = "entityInside",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/Level;playLocalSound(" +
-                            "DDDLnet/minecraft/sounds/SoundEvent;" +
-                            "Lnet/minecraft/sounds/SoundSource;" +
-                            "FFZ)V"
-            )
+            at = @At(value = "INVOKE", target = MildB.TARGET_LEVEL_PLAY_SOUND),
+            index = 5
     )
-    private void modifyPlayLocalSoundArgs(Args args) {
-        if (!ServerConfig.SAFE_SOUND_EFFECT.get()) {
-            return;
-        }
+    private float modifyPlaySoundPitch(float original) {
+        return ServerConfig.SAFE_SOUND_EFFECT.get() ? 1.1f : original;
+    }
 
-        args.set(3, SoundEvents.PISTON_EXTEND);
-        args.set(6, 1.1f);
+    @ModifyArg(
+            method = "entityInside",
+            at = @At(value = "INVOKE", target = MildB.TARGET_LEVEL_PLAY_LOCAL_SOUND),
+            index = 3
+    )
+    private SoundEvent modifyPlayLocalSoundEvent(SoundEvent original) {
+        return ServerConfig.SAFE_SOUND_EFFECT.get() ? SoundEvents.PISTON_EXTEND : original;
+    }
+
+    @ModifyArg(
+            method = "entityInside",
+            at = @At(value = "INVOKE", target = MildB.TARGET_LEVEL_PLAY_LOCAL_SOUND),
+            index = 6
+    )
+    private float modifyPlayLocalSoundPitch(float original) {
+        return ServerConfig.SAFE_SOUND_EFFECT.get() ? 1.1f : original;
     }
 }

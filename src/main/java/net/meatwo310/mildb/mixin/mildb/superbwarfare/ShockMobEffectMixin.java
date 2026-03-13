@@ -1,53 +1,49 @@
 package net.meatwo310.mildb.mixin.mildb.superbwarfare;
 
 import com.atsuishio.superbwarfare.mobeffect.ShockMobEffect;
+import net.meatwo310.mildb.MildB;
 import net.meatwo310.mildb.config.ServerConfig;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(ShockMobEffect.class)
 public class ShockMobEffectMixin {
-    @ModifyArgs(
+    @ModifyArg(
             method = "onEffectAdded",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/Level;playSound(" +
-                            "Lnet/minecraft/world/entity/player/Player;" +
-                            "Lnet/minecraft/core/BlockPos;" +
-                            "Lnet/minecraft/sounds/SoundEvent;" +
-                            "Lnet/minecraft/sounds/SoundSource;" +
-                            "FF)V"
-            )
+            at = @At(value = "INVOKE", target = MildB.TARGET_LEVEL_PLAY_SOUND),
+            index = 2
     )
-    private static void modifyPlaySoundArgs(Args args) {
-        if (!ServerConfig.SAFE_SOUND_EFFECT.get()) {
-            return;
-        }
-
-        args.set(2, SoundEvents.PLAYER_BREATH);
-        args.set(5, 1.5f);
+    private static SoundEvent modifyPlaySoundEvent(SoundEvent original) {
+        return ServerConfig.SAFE_SOUND_EFFECT.get() ? SoundEvents.PLAYER_BREATH : original;
     }
 
-    @ModifyArgs(
+    @ModifyArg(
             method = "onEffectAdded",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/Level;playLocalSound(" +
-                            "DDD" +
-                            "Lnet/minecraft/sounds/SoundEvent;" +
-                            "Lnet/minecraft/sounds/SoundSource;" +
-                            "FFZ)V"
-            )
+            at = @At(value = "INVOKE", target = MildB.TARGET_LEVEL_PLAY_SOUND),
+            index = 5
     )
-    private static void modifyPlayLocalSoundArgs(Args args) {
-        if (!ServerConfig.SAFE_SOUND_EFFECT.get()) {
-            return;
-        }
+    private static float modifyPlaySoundPitch(float original) {
+        return ServerConfig.SAFE_SOUND_EFFECT.get() ? 1.5f : original;
+    }
 
-        args.set(3, SoundEvents.PLAYER_BREATH);
-        args.set(6, 1.5f);
+    @ModifyArg(
+            method = "onEffectAdded",
+            at = @At(value = "INVOKE", target = MildB.TARGET_LEVEL_PLAY_LOCAL_SOUND),
+            index = 3
+    )
+    private static SoundEvent modifyPlayLocalSoundEvent(SoundEvent original) {
+        return ServerConfig.SAFE_SOUND_EFFECT.get() ? SoundEvents.PLAYER_BREATH : original;
+    }
+
+    @ModifyArg(
+            method = "onEffectAdded",
+            at = @At(value = "INVOKE", target = MildB.TARGET_LEVEL_PLAY_LOCAL_SOUND),
+            index = 6
+    )
+    private static float modifyPlayLocalSoundPitch(float original) {
+        return ServerConfig.SAFE_SOUND_EFFECT.get() ? 1.5f : original;
     }
 }
